@@ -1,0 +1,330 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @*<meta name="viewport" content="width = device-width, initial-scale = 2.3, user-scalable = no" />
+        <meta name="viewport" content="width = device-width, initial-scale = 2.3, minimum-scale = 1, maximum-scale = 5" />*@
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="apple-touch-icon-precomposed" href="img/icon.png" />
+    <link rel="apple-touch-icon" href="img/icon.png" />
+    @*While your web application is loading, you can choose to have a splash screen displayed. This image should be 320px x 460px. To set this up, use this Meta tag in the Head of your document.*@
+    <link rel="apple-touch-startup-image" href="img/splash.png" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    @*<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />*@
+
+    @*iPhone and iPod Touch (Retina Display)
+    Icon size: 114px by 114px
+    iPhone and iPod Touch (None Retina Display)
+    Icon size: 57px by 57px
+    iPad (Retina Display)
+    Icon size: 144px by 144px
+    iPad (None Retina Display)
+    Icon size: 72px by 72px*@
+
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png" />
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="apple-icon-57x57-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-icon-72x72-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-icon-114x114-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-icon-144x144-precomposed.png" />
+
+    <!-- Startup splash screen images -->
+    <!-- iPhone 320x460 -->
+    <link href="<?php echo get_stylesheet_directory_uri() . '/images/startup-iphone.png'; ?>" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+    <!-- iPhone Retina 640x920 -->
+    <link rel="apple-touch-startup-image" href="<?php echo get_stylesheet_directory_uri() . '/images/startup-iphone-retina.png'; ?>" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)">
+    <!-- iPhone 5 640x1096 -->
+    <link rel="apple-touch-startup-image" href="<?php echo get_stylesheet_directory_uri() . '/images/startup-iphone5.png'; ?>" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+    <!-- iPad Portrait 768x1004 -->
+    <link href="<?php echo get_stylesheet_directory_uri() . '/images/startup-ipad-portrait.png'; ?>" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+    <!-- iPad Landscape 748x1024 -->
+    <link href="<?php echo get_stylesheet_directory_uri() . '/images/startup-ipad-landscape.png'; ?>" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+    <!-- iPad Retina Portrait 1536x2008 -->
+    <link rel="apple-touch-startup-image" href="<?php echo get_stylesheet_directory_uri() . '/images/startup-ipad-retina-portrait.png'; ?>" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)">
+    <!-- iPad Retina Landscape 1496x2048 -->
+    <link rel="apple-touch-startup-image" href="<?php echo get_stylesheet_directory_uri() . '/images/startup-ipad-retina-landscape.png'; ?>" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)">
+
+
+
+
+
+    <title>TRIPBIDDER.COM @ViewBag.Title</title>
+
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/bootstrap-responsive.css")
+   @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/home.css")
+    @Styles.Render("~/Content/social.css")
+    @Styles.Render("~/Content/sortinggrid.css")
+
+ 
+
+
+
+    @*<link href="~/Content/paging.css" rel="stylesheet" type="text/css" />*@
+
+
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+
+    <meta name="description" content="Cotiza tu viaje." />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                @Html.ActionLink("TRIPBIDDER.COM", "Index", "Home", null, new { @class = "navbar-brand" })
+           
+            <div class="collapse navbar-collapse navHeaderCollapse" id="bs-example-navbar-collapse-1">
+                @*<ul class="nav navbar-nav">*@
+                    @*<li class="active"><a href="@Url.Action("List", "Customers")"><i class="glyphicon glyphicon-home glyphicon-white"></i></a></li>
+            @if (Request.IsAuthenticated)
+            {
+                <li><a href="#about"><i class="glyphicon glyphicon-heart glyphicon-white"></i></a></li>
+            }*@
+
+                    @*<li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+            <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>*@
+
+                @*</ul>*@
+
+                        @*<ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Paquetes <b class="caret"></b></a>
+                        <ul class="dropdown-menu" id="CategoryDropDown">
+                            <li>Paquetes</li>
+                            <li>Hoteles</li>
+                            <li>Aereos</li>
+                            <li class="divider"></li>
+                            <li>Excursiones</li>
+                            <li class="divider"></li>
+                            <li>Autos</li>
+                        </ul>
+                    </li>
+                </ul>*@
+                <div class="col-sm-4 col-xs-12 col-lg-4">
+
+
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post,
+    new { encType = "multipart/form-data", id = "myform", name = "myform", @class = "navbar-form form-search navbar-left", @role = "search" }))
+                    {
+
+                        <div class="input-group">
+
+                            @*@Html.TextBox("SearchTermText", new { @class = "form-control", @Placeholder = "Donde queres viajar?" })*@
+                            @*<input class=" form-control span2"  type="text" name="Customer_name" placeholder="Donde queres viajar?" />*@
+                            <input class="input-append form-control " id="appendedInputButton" placeholder="Donde queres viajar?" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+                            <span class="input-group-btn">
+
+                                <button type="submit" name="operation" id="process" value="process" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                            <img id="divProcessing" src="~/content/images/ajax-loader.gif">
+                        </div>
+
+                    }
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        @if (Request.IsAuthenticated)
+                        {
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right:5px">
+                                    <span class="glyphicon glyphicon-comment" style="padding-right:5px; "></span>Ofertas <span class="label label-primary" data-bind="text: TripsCount"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"><span class="label label-warning">Miami</span>$7500</a></li>
+                                    <li><a href="#"><span class="label label-warning">Miami - Disney</span>$10500</a></li>
+                                    <li><a href="#"><span class="label label-warning">Miami</span>$9000</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#" class="text-center">ver todos</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right:5px">
+                                    <span class="glyphicon glyphicon-envelope" style="padding-right:5px; "></span>Mensajes<span class="label label-info">12</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"><span class="label label-warning">1:30 AM</span>Hotel *</a></li>
+                                    <li><a href="#"><span class="label label-warning">4:30 AM</span>Tipo de Hotel</a></li>
+                                    <li><a href="#"><span class="label label-warning">5:00 AM</span>Borrador</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#" class="text-center">ver todos</a></li>
+                                </ul>
+                            </li>
+
+                        }
+                    </ul>
+
+                    @Html.Partial("_LoginPartial")
+                    @*<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user" style="padding-right:20px; "></span>mi cuenta <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span>Perfil</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Opciones</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-off"></span>Cerrar sesion</a></li>
+                </ul>
+            </li>*@
+
+
+                </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+
+        @RenderBody()
+        <hr />
+
+
+
+        <div class="container-fluid">
+            <footer>
+                <div class="footer">
+                    <div class="row-fluid">
+                        <ul class="nav span2">
+                            <li class="item-142"><a class="" href="/faq">FAQ</a></li>
+                            <li class="item-141"><a class="" href="/license">License</a></li>
+                            <li class="item-140"><a class="" href="/about">About</a></li>
+                            <li class="item-158"><a class="" href="/privacy-policy">Privacy Policy</a></li>
+                            <li class="item-158">@Html.ActionLink("Admin","Admin","Home")</li>
+                        </ul>
+
+                        <ul class="nav span2">
+                            <li class="item-147"><a class="" href="/support-policy">Support Policy</a></li>
+                            <li class="item-145"><a href="/discuss" data-target="#">Support Forum</a></li>
+                            <li class="item-151"><a class="" href="/pre-sales-faq">Pre-Sales FAQ</a></li>
+                            <li class="item-158">@Html.ActionLink("Agencia, Inscribite!", "create", "Agency")</li>
+                            <li class="item-146"><a href="/contact" data-target="#">Contact</a></li>
+                        </ul>
+
+                        <ul class="nav span2">
+                            <li class="item-144"><a href="http://twitter.github.com/bootstrap/index.html" target="_blank">Twitter Bootstrap</a></li>
+                        </ul>
+
+
+                        <div class="span4 newsletter">
+                            <section class="headlines">
+                                <h3>Subscribe to our newsletter</h3>
+                                <p>
+                                    Stay up to date with our new releases, updates and free bootstrap themes and javascript addons
+                                </p>
+                            </section>
+                            <form action="http://bootstrapstyler.com/newsletter/subscribe" method="POST" accept-charset="utf-8">
+                                <p class="row-fluid">
+                                    <input type="text" name="name" id="name" placeholder="Your name" class="span12">
+                                </p>
+                                <p class="row-fluid">
+                                    <input type="text" name="email" id="email" placeholder="Your email" class="span8">
+                                    <input type="submit" name="submit" id="submit" class="btn btn-flat btn-green span4" value="Subscribe">
+                                </p>
+                                <input type="hidden" name="list" value="1" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="end clearfix">
+                        <div class="social pull-left">
+                            <a target="_blank" href="https://twitter.com/bootstrapstyler">Follow us on Twitter</a>
+                            <a target="_blank" href="https://www.facebook.com/BootstrapStyler">Friend us at Facebook</a>
+                        </div>
+                        <div class="copyright pull-right">
+                            © InLatin 2013.
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/scripts/moment.js")
+
+
+
+
+
+
+
+
+    <script>
+        !function ($) {
+            $(function () {
+                // carousel demo
+                $('#myCarousel').carousel({
+                    interval: 180000
+                })
+
+                $("#divProcessing").hide();
+
+            })
+        }(window.jQuery)
+
+        var baseUrl = location.protocol + '//' + location.host;
+
+    </script>
+    @Scripts.Render("~/scripts/holder.js")
+
+    @*@Scripts.Render("~/scripts/app/ko_customers.js")*@
+
+
+    @Scripts.Render("~/scripts/app/ko_trips.js")
+
+
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            // Hide the "busy" Gif at load:
+            $("#divProcessing").hide();
+
+        });
+    </script>
+
+
+    @RenderSection("Scripts", false)
+
+    <div id="index">
+
+    </div>
+    @*@Styles.Render("~/scripts/jquery.mobile.min.css")*@
+
+    @*@Scripts.Render("~/scripts/jquery.min.js")*@
+
+    @Scripts.Render("~/scripts/bookmark_bubble.js")
+    @Scripts.Render("~/scripts/example.js")
+
+    @*@Scripts.Render("~/scripts/jquery.mobile.min.js")*@
+
+
+
+</body>
+
+</html>

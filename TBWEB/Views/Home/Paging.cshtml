@@ -1,0 +1,160 @@
+﻿@using MvcPaging
+@model  IPagedList<TBWeb.Models.Customer>
+@{
+    ViewBag.Title = "MVC 4 Paging Without Ajax Bootstrap";
+}
+<div class="row-fluid">
+    <div class="span6">
+        <h2>
+            Paging With Bootstrap In MVC 4
+        </h2>
+    </div>
+    <div class="span6">
+        <div class="alert alert-info">
+            The pager also supports area's. @Html.ActionLink("Paging in an area", "Paging", "Home", new { Area = "AreaOne" }, new { @class = "btn btn-success" })</div>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+@using (Html.BeginForm("Paging", "Home", FormMethod.Get))
+{
+    <div class="input-append">
+        <input class="span2" id="appendedInputButton" type="text" name="Customer_name" placeholder="Name" value="@ViewData["Customer_name"]"/>
+        <button class="btn" type="submit">
+            <i class="icon-search"></i>&nbsp;Search</button>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Email
+                </th>
+
+                <th>
+                    City
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @item.CustomerId
+        </td>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            @item.Mail
+        </td>
+
+        <td>
+            @item.City
+        </td>
+    </tr>
+}
+        </tbody>
+    </table>
+    <div class="pager">
+        @Html.Raw(Html.Pager(
+            new Options
+            {
+                PageSize = Model.PageSize,
+                TotalItemCount = Model.TotalItemCount,
+                CurrentPage = Model.PageNumber,
+                ItemTexts = new ItemTexts() { Next = "Next", Previous = "Previous" },
+                ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                TooltipTitles = new TooltipTitles() { Next = "Next page {0}", Previous = "Previous page {0}", Page = "Go to page {0}" },
+                Size = Size.normal,
+                Alignment = Alignment.centered,
+                IsShowControls = true,
+                IsShowFirstLast = true,
+                IsShowPages = true
+            }, new { Customer_name = ViewData["Customer_name"] }))
+    </div>
+}
+<div>
+    <div class="well">
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span class="GramE"><span style="font-size: 9.5pt; font-family: Consolas; background: yellow;
+                mso-highlight: yellow">@@</span><span class="SpellE"><span style="font-size: 9.5pt;
+                    font-family: Consolas">Html.Raw</span></span><span style="font-size: 9.5pt; font-family: Consolas">(</span></span><span
+                        class="SpellE"><span style="font-size: 9.5pt; font-family: Consolas">Html.Pager</span></span><span
+                            style="font-size: 9.5pt; font-family: Consolas">(<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="GramE">
+                    <span style="color: blue">new</span></span> <span style="color: #2B91AF">Options</span><o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span><span class="SpellE">PageSize</span> = <span class="SpellE">Model.PageSize</span>,<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span><span class="SpellE">TotalItemCount</span> = <span class="SpellE">Model.TotalItemCount</span>,<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span><span class="SpellE">CurrentPage</span> = <span class="SpellE">Model.PageNumber</span>,<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span><span class="SpellE">ItemTexts</span> = <span style="color: blue">new</span>
+                <span class="SpellE"><span class="GramE"><span style="color: #2B91AF">ItemTexts</span></span></span><span
+                    class="GramE">(</span>) { Next = <span style="color: #A31515">"Next"</span>,
+                Previous = <span style="color: #A31515">"Previous"</span> },<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span><span class="SpellE">TooltipTitles</span> = <span style="color: blue">new</span>
+                <span class="SpellE"><span class="GramE"><span style="color: #2B91AF">TooltipTitles</span></span></span><span
+                    class="GramE">(</span>) { Next = <span style="color: #A31515">"Next page {0}"</span>,
+                Previous = <span style="color: #A31515">"Previous page {0}"</span>, Page = <span
+                    style="color: #A31515">"Go to page {0}"</span> },<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>Size = <span class="SpellE"><span style="color: #2B91AF">Size</span>.normal</span>,<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>Alignment = <span class="SpellE"><span style="color: #2B91AF">Alignment</span>.centered</span>,<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="mso-spacerun: yes">
+                    &nbsp;&nbsp;&nbsp;&nbsp;</span><span class="SpellE">IsShowControls</span> =
+                <span style="color: blue">true</span><o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-bottom: 0cm; margin-bottom: .0001pt; line-height: normal;
+            mso-layout-grid-align: none; text-autospace: none">
+            <span style="font-size: 9.5pt; font-family: Consolas"><span style="mso-spacerun: yes">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}, <span
+                    style="color: blue">new</span> <span class="GramE">{ <span class="SpellE">Customer</span></span><span
+                        class="SpellE">_name</span> = <span class="SpellE">ViewData</span>[<span style="color: #A31515">"<span
+                            class="SpellE">Customer_name</span>"</span>] }))<o:p></o:p></span></p>
+        <p class="MsoNormal">
+            <o:p>&nbsp;</o:p>
+        </p>
+    </div>
+</div>

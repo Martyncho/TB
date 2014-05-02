@@ -1,0 +1,22 @@
+﻿@model IEnumerable<TBWeb.Models.News>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+
+<div class="list-group hidden-xs">
+    @foreach (var item in Model)
+    {
+        <div class="list-group-item">
+            <span class="list-group-item-heading">
+                @Html.DisplayFor(modelItem => item.NewsTitle)
+                @Html.DisplayFor(modelItem => item.NewsPostDate)
+            </span>
+            <span class="list-group-item-text">
+                @Html.DisplayFor(modelItem => item.NewsImage)
+                @Html.DisplayFor(modelItem => item.NewsBody)
+                @Html.DisplayFor(modelItem => item.NewsURL)
+            </span>
+        </div>
+    }
+</div>
