@@ -1,0 +1,270 @@
+﻿@model TBWeb.Models.Agency
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Agency</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RegistryNumber, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RegistryNumber)
+                @Html.ValidationMessageFor(model => model.RegistryNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CUIT, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CUIT)
+                @Html.ValidationMessageFor(model => model.CUIT)
+            </div>
+        </div>
+
+        @Html.Partial("../Locations/_partialLocations");
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Adress, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Adress)
+                @Html.ValidationMessageFor(model => model.Adress)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostalCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PostalCode)
+                @Html.ValidationMessageFor(model => model.PostalCode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AgencyPhone, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.AgencyPhone)
+                @Html.ValidationMessageFor(model => model.AgencyPhone)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AgencyPhone2, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.AgencyPhone2)
+                @Html.ValidationMessageFor(model => model.AgencyPhone2)
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WebPage, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WebPage)
+                @Html.ValidationMessageFor(model => model.WebPage)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ConfirmPassword)
+                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EMail, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EMail)
+                @Html.ValidationMessageFor(model => model.EMail)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmEmail, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ConfirmEmail)
+                @Html.ValidationMessageFor(model => model.ConfirmEmail)
+            </div>
+        </div>
+
+        <hr />
+
+        <span>Rango de Precios de Venta</span>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PriceRangeFrom, new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.EditorFor(model => model.PriceRangeFrom)
+                @Html.ValidationMessageFor(model => model.PriceRangeFrom)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PriceRangeTo, new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.EditorFor(model => model.PriceRangeTo)
+                @Html.ValidationMessageFor(model => model.PriceRangeTo)
+            </div>
+</div>
+
+            <hr />
+            <div class="col-md-3">
+                <h4>Tipos de Cliente</h4>
+                <div class="editor-field">
+                    <ul>
+                        @if (ViewBag.CustomerProfiles != null)
+                {
+                    foreach (TBWeb.Models.CustomerProfile CustomerProfile in ViewBag.CustomerProfiles)
+                    {
+                        <li>
+                            @if (Model != null && Model.CustomerProfiles.Select(e => e).Where(e => e.CustomerProfileId == CustomerProfile.CustomerProfileId).Count() > 0)
+{
+    <input type="checkbox" name="CustomerProfiles" value="@CustomerProfile.CustomerProfileId" checked="checked" />
+}
+                            else
+                            {
+                                <input type="checkbox" name="CustomerProfiles" value="@CustomerProfile.CustomerProfileId" />
+                            }
+                            @CustomerProfile.Name
+                        </li>
+                    }
+                    @Html.ValidationMessageFor(model => model.CustomerProfiles)
+                }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <h4>Destinos</h4>
+                <div class="editor-field">
+                    <ul>
+                        @if (ViewBag.Destinations != null)
+                        {
+                            foreach (TBWeb.Models.Destination Destination in ViewBag.Destinations)
+                            {
+                                <li>
+                                    @if (Model != null && Model.Destinations.Select(e => e).Where(e => e.DestinationId == Destination.DestinationId).Count() > 0)
+                                    {
+                                        <input type="checkbox" name="DestinationIds" value="@Destination.DestinationId" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="DestinationIds" value="@Destination.DestinationId" />
+                                    }
+                                    @Destination.Name
+                                </li>
+                            }
+                            @Html.ValidationMessageFor(model => model.Destinations)
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <h4>Formas de Pago</h4>
+                <div class="editor-field">
+                    <ul>
+                        @if (ViewBag.PaymentMethods != null)
+                        {
+                            foreach (TBWeb.Models.PaymentMethod PaymentMethod in ViewBag.PaymentMethods)
+                            {
+                                <li>
+                                    @if (Model != null && Model.PaymentMethods.Select(e => e).Where(e => e.PaymentMethodId == PaymentMethod.PaymentMethodId).Count() > 0)
+                                    {
+                                        <input type="checkbox" name="PaymentMethodIds" value="@PaymentMethod.PaymentMethodId" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="PaymentMethodIds" value="@PaymentMethod.PaymentMethodId" />
+                                    }
+                                    @PaymentMethod.Name
+                                </li>
+                            }
+                            @Html.ValidationMessageFor(model => model.PaymentMethods)
+                        }
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <h4>Productos</h4>
+                <div class="editor-field">
+                    <ul>
+                        @if (ViewBag.Products != null)
+                        {
+                            foreach (TBWeb.Models.Product Product in ViewBag.Products)
+                            {
+                                <li>
+                                    @if (Model != null && Model.Products.Select(e => e).Where(e => e.ProductId == Product.ProductId).Count() > 0)
+                                    {
+                                        <input type="checkbox" name="ProductIds" value="@Product.ProductId" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="ProductIds" value="@Product.ProductId" />
+                                    }
+                                    @Product.Name
+                                </li>
+                            }
+                            @Html.ValidationMessageFor(model => model.Products)
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+    var currentcityid = '@(ViewBag.CityId)';
+    var currentcountryid = '@(ViewBag.CountryId)';
+    var currentstateid = '@(ViewBag.StateId)';
+
+</script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/app/locations/locations.js")
+}
+
+

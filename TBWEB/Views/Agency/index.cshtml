@@ -1,0 +1,142 @@
+﻿@model IEnumerable<TBWeb.Models.Agency>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.City.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ranking)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegistryNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUIT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AgencyPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AgencyPhone2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WebPage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfirmPassword)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfirmEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceRangeFrom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceRangeTo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberCategoryId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.City.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.State.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ranking)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegistryNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CUIT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgencyPhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgencyPhone2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WebPage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfirmPassword)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfirmEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PriceRangeFrom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PriceRangeTo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberCategoryId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AgencyId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AgencyId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AgencyId })
+        </td>
+    </tr>
+}
+
+</table>
