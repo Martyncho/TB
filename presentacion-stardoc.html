@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stardoc – Presentación Institucional</title>
+  <style>
+    /* ── Reset & base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-dark:   #0A2342;
+      --blue-mid:    #1565C0;
+      --blue-light:  #1E88E5;
+      --accent:      #00BCD4;
+      --text-light:  #FFFFFF;
+      --text-dark:   #1A1A2E;
+      --gray-soft:   #F0F4F8;
+      --card-bg:     rgba(255,255,255,0.10);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--blue-dark);
+      overflow: hidden;
+    }
+
+    /* ── Presentation container ───────────────────────────────────── */
+    .presentation {
+      width: 100vw; height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Slides ────────────────────────────────────────────────────── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 72px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.55s ease, transform 0.55s ease;
+      transform: translateX(60px);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    .slide.exit-left {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+
+    /* ── Slide backgrounds ─────────────────────────────────────────── */
+    .slide-cover {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #0D3B6E 60%, #0A2342 100%);
+    }
+    .slide-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(0,188,212,0.18) 0%, transparent 55%),
+        radial-gradient(circle at 80% 15%, rgba(21,101,192,0.35) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .slide-light { background: var(--gray-soft); color: var(--text-dark); }
+    .slide-dark  { background: linear-gradient(135deg, #0D3B6E 0%, #0A2342 100%); }
+    .slide-accent {
+      background: linear-gradient(135deg, #0A2342 0%, #1565C0 100%);
+    }
+    .slide-teal  { background: linear-gradient(135deg, #004D6E 0%, #006E8A 100%); }
+    .slide-close { background: linear-gradient(135deg, #0A2342 0%, #0D3B6E 100%); }
+
+    /* ── Decorative shapes ─────────────────────────────────────────── */
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .shape-1 { width: 320px; height: 320px; top: -80px; right: -80px;
+      background: rgba(0,188,212,0.08); }
+    .shape-2 { width: 200px; height: 200px; bottom: -60px; left: -40px;
+      background: rgba(21,101,192,0.12); }
+
+    /* ── Typography helpers ────────────────────────────────────────── */
+    .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    h1.cover-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      color: var(--text-light);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+
+    h1.cover-title span { color: var(--accent); }
+
+    .cover-sub {
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      color: rgba(255,255,255,0.78);
+      max-width: 680px;
+      line-height: 1.6;
+      position: relative; z-index: 1;
+    }
+
+    .logo-text {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: var(--text-light);
+      position: relative; z-index: 1;
+    }
+    .logo-text span { color: var(--accent); }
+
+    h2.slide-heading {
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      margin-bottom: 28px;
+      color: var(--text-light);
+      position: relative; z-index: 1;
+    }
+
+    h2.slide-heading.dark-text { color: var(--blue-dark); }
+
+    /* ── Cards grid ────────────────────────────────────────────────── */
+    .cards {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 1100px;
+      position: relative; z-index: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      border-radius: 16px;
+      padding: 28px 26px;
+      flex: 1 1 220px;
+      max-width: 260px;
+      text-align: center;
+      transition: transform 0.25s;
+    }
+
+    .card:hover { transform: translateY(-4px); }
+
+    .card-icon {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    .card-body {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.55;
+    }
+
+    /* ── Light card (for slide-light) ─────────────────────────────── */
+    .card-white {
+      background: #FFFFFF;
+      border: 1px solid #D0DCF0;
+      border-radius: 16px;
+      padding: 26px 22px;
+      flex: 1 1 210px;
+      max-width: 250px;
+      text-align: center;
+      box-shadow: 0 4px 18px rgba(10,35,66,0.08);
+      transition: transform 0.25s;
+    }
+    .card-white:hover { transform: translateY(-4px); }
+
+    .card-white .card-icon { font-size: 2.2rem; margin-bottom: 12px; }
+    .card-white .card-title { color: var(--blue-dark); font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .card-white .card-body { color: #4A5568; font-size: 0.85rem; line-height: 1.55; }
+
+    /* ── Two-column layout ─────────────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 1050px;
+      width: 100%;
+      text-align: left;
+      position: relative; z-index: 1;
+    }
+
+    .col-content h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .col-content p, .col-content li {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.65;
+    }
+
+    .col-content ul {
+      padding-left: 18px;
+    }
+
+    .col-content ul li { margin-bottom: 8px; }
+
+    .highlight-box {
+      background: rgba(0,188,212,0.12);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.6;
+    }
+
+    /* ── Stats row ─────────────────────────────────────────────────── */
+    .stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative; z-index: 1;
+      margin-top: 8px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.72);
+      margin-top: 6px;
+    }
+
+    /* ── Checklist ─────────────────────────────────────────────────── */
+    .checklist {
+      list-style: none;
+      text-align: left;
+      max-width: 600px;
+      position: relative; z-index: 1;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 1.02rem;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 14px;
+      line-height: 1.55;
+    }
+
+    .checklist li::before {
+      content: '✔';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── CTA / final slide ─────────────────────────────────────────── */
+    .cta-box {
+      background: rgba(0,188,212,0.12);
+      border: 1px solid rgba(0,188,212,0.4);
+      border-radius: 20px;
+      padding: 36px 48px;
+      max-width: 680px;
+      position: relative; z-index: 1;
+      margin-top: 20px;
+    }
+
+    .cta-box p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--blue-dark);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 13px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn:hover { background: #26C6DA; transform: scale(1.03); }
+
+    /* ── Divider line ──────────────────────────────────────────────── */
+    .divider {
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: 18px auto 28px;
+      position: relative; z-index: 1;
+    }
+
+    .divider.left { margin-left: 0; }
+
+    /* ── Navigation bar ────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      border-radius: 50px;
+      padding: 9px 24px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .nav-btn:hover { background: rgba(0,188,212,0.35); }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .dot.active { background: var(--accent); transform: scale(1.35); }
+
+    /* ── Slide counter ─────────────────────────────────────────────── */
+    .slide-counter {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      z-index: 100;
+      letter-spacing: 1px;
+    }
+
+    /* ── Responsive tweaks ─────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .slide { padding: 32px 24px; }
+      .two-col { grid-template-columns: 1fr; gap: 20px; }
+      .cards { gap: 16px; }
+      .card, .card-white { max-width: 100%; }
+      .stats { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="presentation" id="presentation">
+
+  <!-- ── SLIDE 1: Portada ──────────────────────────────────────────── -->
+  <section class="slide slide-cover active" id="slide-1">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <div class="logo-text" style="margin-bottom:12px;">
+      Star<span>doc</span>
+    </div>
+
+    <div class="tag" style="position:relative;z-index:1;">Argentina S.A.</div>
+
+    <h1 class="cover-title">
+      Inteligencia en la<br>
+      <span>Gestión de Información</span>
+    </h1>
+
+    <p class="cover-sub">
+      Más de 20 años transformando la manera en que las organizaciones
+      administran, acceden y protegen su información crítica.
+    </p>
+
+    <div style="margin-top:40px;position:relative;z-index:1;">
+      <span style="font-size:0.82rem;color:rgba(255,255,255,0.45);letter-spacing:2px;text-transform:uppercase;">
+        Presentación Institucional · 2025
+      </span>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 2: Quiénes somos ────────────────────────────────────── -->
+  <section class="slide slide-dark" id="slide-2">
+    <div class="shape shape-1"></div>
+
+    <div class="tag">Nuestra historia</div>
+    <h2 class="slide-heading">Quiénes Somos</h2>
+    <div class="divider"></div>
+
+    <div class="stats" style="margin-bottom:40px;">
+      <div class="stat">
+        <div class="stat-number">+20</div>
+        <div class="stat-label">años de trayectoria</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">ISO</div>
+        <div class="stat-label">9001 certificados</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">clientes activos</div>
+      </div>
+    </div>
+
+    <ul class="checklist">
+      <li>Empresa argentina especializada en gestión digital de información y automatización de procesos (BPM).</li>
+      <li>Presencia en sectores exigentes: seguros, banca, gobierno, salud y empresas crossmarket.</li>
+      <li>Equipo de profesionales certificados en gestión documental y reingeniería de procesos.</li>
+      <li>Acompañamiento integral: desde el relevamiento inicial hasta la capacitación y el soporte continuo.</li>
+    </ul>
+  </section>
+
+  <!-- ── SLIDE 3: Suite Zamba ──────────────────────────────────────── -->
+  <section class="slide slide-light" id="slide-3">
+    <div class="tag" style="color:var(--blue-mid);">Nuestra plataforma</div>
+    <h2 class="slide-heading dark-text">Suite <span style="color:var(--blue-mid);">Zamba</span></h2>
+    <div class="divider"></div>
+
+    <div class="cards">
+      <div class="card-white">
+        <div class="card-icon">📄</div>
+        <div class="card-title">Zamba Documental</div>
+        <div class="card-body">Gestión electrónica del ciclo de vida completo de documentos: captura, clasificación, versionado, distribución y depuración.</div>
+      </div>
+      <div class="card-white">
+        <div class="card-icon">⚙️</div>
+        <div class="card-title">Zamba BPM</div>
+        <div class="card-body">Modelado, ejecución y monitoreo de flujos de trabajo. Automatiza aprobaciones, notificaciones y procesos operativos.</div>
+      </div>
+      <div class="card-white">
+        <div class="card-icon">☁️</div>
+        <div class="card-title">Zamba SaaS</div>
+        <div class="card-body">Modalidad en la nube gestionada por Stardoc. Sin inversión en infraestructura, con alta disponibilidad y seguridad.</div>
+      </div>
+      <div class="card-white">
+        <div class="card-icon">🔍</div>
+        <div class="card-title">Consultoría</div>
+        <div class="card-body">Relevamiento, diseño de soluciones, implementación, capacitación y soporte especializado post-puesta en marcha.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 4: Gestión Documental ──────────────────────────────── -->
+  <section class="slide slide-accent" id="slide-4">
+    <div class="shape shape-1"></div>
+
+    <div class="tag">Gestión documental</div>
+    <h2 class="slide-heading">Centralización y Control de la Información</h2>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div class="col-content">
+        <h3>Administración Integral</h3>
+        <ul>
+          <li>Repositorio único y estructurado para documentación institucional (manuales, procedimientos, políticas, instructivos, formularios).</li>
+          <li>Control de versiones: siempre disponible la versión vigente, con historial completo de cambios.</li>
+          <li>Permisos granulares por usuario, área o rol; acceso seguro desde cualquier dispositivo.</li>
+        </ul>
+        <div class="highlight-box">
+          Cada documento tiene un ciclo de vida definido: creación → revisión → aprobación → publicación → actualización.
+        </div>
+      </div>
+      <div class="col-content">
+        <h3>Búsqueda e Inteligencia</h3>
+        <ul>
+          <li>Búsqueda full-text: por palabras clave, metadatos, contenido o notas internas.</li>
+          <li>Clasificación jerárquica y relaciones entre documentos vinculados.</li>
+          <li>Auditoría completa: quién accedió, modificó o aprobó cada documento y cuándo.</li>
+          <li>Notificaciones automáticas ante nuevas versiones o vencimientos de documentos.</li>
+        </ul>
+        <div class="highlight-box">
+          Compatible con todos los formatos habituales: PDF, Office, imágenes, formularios electrónicos, audio y video.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 5: BPM & Automatización ─────────────────────────────── -->
+  <section class="slide slide-teal" id="slide-5">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <div class="tag">Automatización de procesos</div>
+    <h2 class="slide-heading">Flujos de Trabajo Inteligentes</h2>
+    <div class="divider"></div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Circuitos de Aprobación</div>
+        <div class="card-body">Definición de flujos con múltiples etapas, aprobadores y responsables. Trazabilidad total del proceso.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔔</div>
+        <div class="card-title">Alertas y Notificaciones</div>
+        <div class="card-body">Comunicación automática de novedades, documentos publicados o próximos a vencer a los equipos involucrados.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Monitoreo y KPIs</div>
+        <div class="card-body">Panel de control para visualizar el estado de procesos, cuellos de botella y cumplimiento de plazos en tiempo real.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔗</div>
+        <div class="card-title">Integración</div>
+        <div class="card-body">Conectividad con sistemas existentes (ERP, HIS, correo corporativo, Active Directory) a través de APIs y conectores estándar.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 6: ¿Por qué Stardoc? ───────────────────────────────── -->
+  <section class="slide slide-dark" id="slide-6">
+    <div class="shape shape-1"></div>
+
+    <div class="tag">Nuestra propuesta de valor</div>
+    <h2 class="slide-heading">¿Por Qué Elegir Stardoc?</h2>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div class="col-content">
+        <h3>Experiencia que respalda</h3>
+        <ul>
+          <li>Más de dos décadas implementando soluciones de gestión documental en organizaciones complejas y reguladas.</li>
+          <li>Certificación ISO 9001 que garantiza estándares internacionales de calidad en nuestros proyectos.</li>
+          <li>Metodología probada: relevamiento → diseño → implementación → capacitación → soporte.</li>
+        </ul>
+      </div>
+      <div class="col-content">
+        <h3>Beneficios concretos</h3>
+        <ul>
+          <li><strong style="color:var(--accent);">Reducción de riesgos:</strong> versiones unificadas, sin documentos desactualizados en circulación.</li>
+          <li><strong style="color:var(--accent);">Eficiencia operativa:</strong> menor tiempo de búsqueda, menos papel, menos errores.</li>
+          <li><strong style="color:var(--accent);">Cumplimiento normativo:</strong> auditoría y trazabilidad alineada con regulaciones del sector.</li>
+          <li><strong style="color:var(--accent);">Escalabilidad:</strong> crece con la organización, sin cambiar de plataforma.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 7: Próximos Pasos ───────────────────────────────────── -->
+  <section class="slide slide-close" id="slide-7">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <div class="logo-text" style="font-size:2.8rem;margin-bottom:10px;">
+      Star<span>doc</span>
+    </div>
+    <div class="tag" style="margin-bottom:24px;">Trabajemos juntos</div>
+
+    <h2 class="slide-heading" style="font-size:2rem;">Próximos Pasos</h2>
+    <div class="divider"></div>
+
+    <div class="cta-box">
+      <p>
+        Nos gustaría conocer en mayor profundidad la realidad de su organización para presentarles
+        una solución personalizada que responda exactamente a sus necesidades.
+      </p>
+      <p>
+        📅 <strong style="color:var(--accent);">Demostración en vivo</strong> de la plataforma Zamba<br>
+        🗂 <strong style="color:var(--accent);">Propuesta técnica y comercial</strong> a medida<br>
+        🤝 <strong style="color:var(--accent);">Acompañamiento</strong> en cada etapa del proyecto
+      </p>
+      <p style="font-size:0.9rem;margin-bottom:0;color:rgba(255,255,255,0.6);">
+        <strong style="color:rgba(255,255,255,0.85);">contacto@stardoc.com.ar</strong>
+        &nbsp;·&nbsp;
+        <strong style="color:rgba(255,255,255,0.85);">www.stardoc.com.ar</strong>
+      </p>
+    </div>
+  </section>
+
+</div><!-- /presentation -->
+
+<!-- ── Navigation ───────────────────────────────────────────────────── -->
+<div class="slide-counter" id="counter">1 / 7</div>
+<div aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" id="slide-announce"></div>
+
+<div class="nav">
+  <button class="nav-btn" id="btnPrev" onclick="changeSlide(-1)" disabled>← Anterior</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="btnNext" onclick="changeSlide(1)">Siguiente →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  let current = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsContainer.appendChild(d);
+  });
+
+  function goTo(index) {
+    if (index === current) return;
+    // Animate out current
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit-left');
+    setTimeout(() => slides[current].classList.remove('exit-left'), 600);
+
+    current = index;
+
+    // Animate in new
+    slides[current].classList.add('active');
+
+    // Update dots
+    document.querySelectorAll('.dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current)
+    );
+
+    // Update counter
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+
+    // Announce slide change for screen readers
+    const heading = slides[current].querySelector('h1, h2');
+    document.getElementById('slide-announce').textContent =
+      'Diapositiva ' + (current + 1) + ' de ' + slides.length +
+      (heading ? ': ' + heading.textContent : '');
+
+    // Update buttons
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === slides.length - 1;
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next >= 0 && next < slides.length) goTo(next);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      changeSlide(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      changeSlide(-1);
+    }
+  });
+
+  // Touch / swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+  });
+</script>
+
+</body>
+</html>
